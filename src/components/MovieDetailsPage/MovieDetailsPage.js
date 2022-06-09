@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {
+  useParams,
+  useNavigate,
+  Link,
+  Outlet,
+  useLocation,
+} from 'react-router-dom';
+
 import './MovieDetailsPage.css';
 const axios = require('axios').default;
 
@@ -9,21 +16,22 @@ export default function MovieDetailsPage() {
   const { movieID } = useParams();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
+  // const location = useLocation();
+  // console.log(location);
 
   useEffect(() => {
-    async function getUser() {
+    async function getMovie() {
       try {
         const response = await axios.get(
           `http://api.themoviedb.org/3/movie/${movieID}?api_key=da20cf53e1f8df5e7c28db8c672e3f8f`
         );
         setMovie(response.data);
         setLoading(false);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     }
-    getUser();
+    getMovie();
   }, [movieID]);
 
   return (
@@ -61,8 +69,20 @@ export default function MovieDetailsPage() {
                 </div>
               </div>
             </div>
+            <div className="add__info">
+              <h3>Additional information</h3>
+              <ul className="add__links">
+                <li className="add__item">
+                  <Link to={`/movies/${movieID}/cast`}>Cast</Link>
+                </li>
+                <li className="add__item">
+                  <Link to={`/movies/${movieID}/reviews`}>Reviews</Link>
+                </li>
+              </ul>
+            </div>
           </div>
           <hr />
+          <Outlet />
         </>
       )}
     </>
