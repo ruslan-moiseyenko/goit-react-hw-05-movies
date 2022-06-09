@@ -4,8 +4,6 @@ import './HomePage.css';
 
 const axios = require('axios').default;
 
-//api.themoviedb.org/3/trending/movie/day?api_key=da20cf53e1f8df5e7c28db8c672e3f8f
-
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
 
@@ -16,18 +14,12 @@ export default function HomePage() {
           'http://api.themoviedb.org/3/trending/movie/day?api_key=da20cf53e1f8df5e7c28db8c672e3f8f'
         );
         setMovies(response.data.results);
-        // console.log(response.data.results);
       } catch (error) {
         console.error(error);
       }
     }
     getUser();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(location.pathname);
-  //   console.log(useMatch);
-  // }, [location, useMatch]);
 
   return (
     <>

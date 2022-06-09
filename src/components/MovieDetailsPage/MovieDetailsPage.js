@@ -4,7 +4,7 @@ import {
   useNavigate,
   Link,
   Outlet,
-  useLocation,
+  // useLocation,
 } from 'react-router-dom';
 
 import './MovieDetailsPage.css';
