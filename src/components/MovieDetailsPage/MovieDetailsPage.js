@@ -1,14 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  useParams,
-  useNavigate,
-  Link,
-  Outlet,
-  // useLocation,
-} from 'react-router-dom';
-
+import { useParams, useNavigate, Link, Outlet } from 'react-router-dom';
+import { getMovie } from '../services/moviesAPI';
 import './MovieDetailsPage.css';
-const axios = require('axios').default;
 
 export default function MovieDetailsPage() {
   const [movie, setMovie] = useState([]);
@@ -16,22 +9,16 @@ export default function MovieDetailsPage() {
   const { movieID } = useParams();
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
-  // const location = useLocation();
-  // console.log(location);
 
   useEffect(() => {
-    async function getMovie() {
-      try {
-        const response = await axios.get(
-          `http://api.themoviedb.org/3/movie/${movieID}?api_key=da20cf53e1f8df5e7c28db8c672e3f8f`
-        );
-        setMovie(response.data);
+    getMovie(movieID)
+      .then(response => {
         setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getMovie();
+        setMovie(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }, [movieID]);
 
   return (
@@ -48,7 +35,11 @@ export default function MovieDetailsPage() {
             <div className="movies__wrapper">
               <div className="movies__poster">
                 <img
-                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                  src={
+                    movie.poster_path
+                      ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                      : 'https://via.placeholder.com/500x750'
+                  }
                   alt={movie.title}
                   className="movies__img"
                 />

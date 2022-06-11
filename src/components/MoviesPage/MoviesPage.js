@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import './MoiviesPage.css';
-import axios from 'axios';
+import { getMovies } from '../services/moviesAPI';
 
 export default function MoviesPage() {
   const [search, setSearch] = useState('');
@@ -10,8 +10,9 @@ export default function MoviesPage() {
 
   const onSubmitClick = e => {
     e.preventDefault();
-    setSearchParams({ search: e.target.search.value });
-    setSearch(e.target.search.value);
+    const { value } = e.target.search;
+    setSearch(value);
+    setSearchParams({ search: value });
   };
   useEffect(() => {
     const oldSearch = searchParams.get('search') || '';
@@ -22,17 +23,10 @@ export default function MoviesPage() {
     if (search === '') {
       return;
     }
-    async function getMovies() {
-      try {
-        const response = await axios.get(
-          `http://api.themoviedb.org/3/search/movie?api_key=da20cf53e1f8df5e7c28db8c672e3f8f&query=${search}`
-        );
-        setMovies(response.data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getMovies();
+
+    getMovies(search).then(response => {
+      setMovies(response.data.results);
+    });
   }, [search]);
 
   return (
