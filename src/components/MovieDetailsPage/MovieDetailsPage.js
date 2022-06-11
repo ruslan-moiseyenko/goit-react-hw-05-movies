@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link, Outlet } from 'react-router-dom';
-import { getMovie } from '../services/moviesAPI';
+import { getMovie } from '../../services/moviesAPI';
 import './MovieDetailsPage.css';
 
 export default function MovieDetailsPage() {

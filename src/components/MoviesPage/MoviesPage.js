@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import './MoiviesPage.css';
-import { getMovies } from '../services/moviesAPI';
+import { getMovies } from '../../services/moviesAPI';
 
 export default function MoviesPage() {
   const [search, setSearch] = useState('');
@@ -16,6 +16,8 @@ export default function MoviesPage() {
   };
   useEffect(() => {
     const oldSearch = searchParams.get('search') || '';
+    const searchInput = document.getElementById('search');
+    searchInput.value = oldSearch;
     setSearch(oldSearch);
   }, [searchParams]);
 
@@ -33,7 +35,12 @@ export default function MoviesPage() {
     <>
       <div className="search__wrapper">
         <form className="movies__search" onSubmit={onSubmitClick}>
-          <input type="search" name="search" placeholder="Search for a movie" />
+          <input
+            type="search"
+            name="search"
+            placeholder="Search for a movie"
+            id="search"
+          />
           <input type="submit" value="Search" />
         </form>
         <div className="movies__list">

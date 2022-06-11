@@ -22,9 +22,10 @@ const NotFound = lazy(
 
 export default function App() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Routes>
-        <Route path="/" element={<Navigation />}>
+    <>
+      <Navigation />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
           <Route index element={<HomePage />} />
           <Route path="movies" element={<MoviesPage />} />
           <Route path="movies/:movieID/*" element={<MovieDetailsPage />}>
@@ -32,8 +33,8 @@ export default function App() {
             <Route path="reviews" element={<Reviews />} />
           </Route>
           <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Suspense>
+        </Routes>
+      </Suspense>
+    </>
   );
 }

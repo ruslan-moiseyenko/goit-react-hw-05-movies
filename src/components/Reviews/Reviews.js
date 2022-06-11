@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-const axios = require('axios').default;
+import { getReviews } from '../../services/moviesAPI';
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
   const { movieID } = useParams();
 
   useEffect(() => {
-    async function getCast() {
-      try {
-        const response = await axios.get(
-          `http://api.themoviedb.org/3/movie/${movieID}/reviews?api_key=da20cf53e1f8df5e7c28db8c672e3f8f`
-        );
-        setReviews(response.data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getCast();
+    getReviews(movieID)
+      .then(response => setReviews(response.data.results))
+      .catch(error => console.error(error));
   }, [movieID]);
 
   return (

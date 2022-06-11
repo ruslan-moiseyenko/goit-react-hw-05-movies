@@ -20,3 +20,17 @@ export async function getTrendingMovies() {
   );
   return response;
 }
+
+export async function getReviews(movieID) {
+  const response = await axios.get(
+    `https://api.themoviedb.org/3/movie/${movieID}/reviews?api_key=da20cf53e1f8df5e7c28db8c672e3f8f`
+  );
+  return response;
+}
+
+export async function getCast(movieID) {
+  const response = await axios.get(
+    `http://api.themoviedb.org/3/movie/${movieID}/credits?api_key=da20cf53e1f8df5e7c28db8c672e3f8f`
+  );
+  return response;
+}

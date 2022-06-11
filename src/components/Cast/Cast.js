@@ -1,23 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-const axios = require('axios').default;
+import { getCast } from '../../services/moviesAPI';
 
 export default function Cast() {
   const [cast, setCast] = useState([]);
   const { movieID } = useParams();
 
   useEffect(() => {
-    async function getCast() {
-      try {
-        const response = await axios.get(
-          `http://api.themoviedb.org/3/movie/${movieID}/credits?api_key=da20cf53e1f8df5e7c28db8c672e3f8f`
-        );
-        setCast(response.data.cast);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getCast();
+    getCast(movieID)
+      .then(response => setCast(response.data.cast))
+      .catch(error => console.error(error));
   }, [movieID]);
 
   return (

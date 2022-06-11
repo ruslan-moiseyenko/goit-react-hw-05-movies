@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
-import { getTrendingMovies } from '../services/moviesAPI';
+import { getTrendingMovies } from '../../services/moviesAPI';
 
 export default function HomePage() {
   const [movies, setMovies] = useState([]);
